@@ -1,0 +1,19 @@
+{
+  "name": "High Plains Raceway",
+  "short_name": "HPR",
+  "description": "Colorado's Premier Amateur Racing Facility — 2.55 miles, 15 turns, 300+ feet of elevation change.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#050505",
+  "theme_color": "#dc2626",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
