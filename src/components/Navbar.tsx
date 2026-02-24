@@ -37,6 +37,11 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
   const handleMouseEnter = (label: string) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setOpenDropdown(label);
@@ -119,25 +124,25 @@ export default function Navbar() {
       </div>
 
       {mobileOpen && (
-        <div className="lg:hidden bg-background/98 backdrop-blur-md border-t border-border">
-          <div className="max-w-7xl mx-auto px-4 py-4 space-y-1">
+        <div className="lg:hidden fixed inset-0 top-16 z-40 bg-background/[0.98] backdrop-blur-md border-t border-border overflow-y-auto overscroll-contain -webkit-overflow-scrolling-touch">
+          <nav className="max-w-7xl mx-auto px-4 py-4 space-y-1 pb-24" aria-label="Mobile navigation">
             {NAV_ITEMS.map((item) => (
               <div key={item.label}>
                 <Link
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className="block px-4 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                  className="block px-4 py-3 text-base font-medium text-gray-300 hover:text-white active:bg-white/10 hover:bg-white/5 rounded-lg transition-colors"
                 >
                   {item.label}
                 </Link>
                 {item.children && (
-                  <div className="ml-4 border-l border-border pl-4 space-y-1">
+                  <div className="ml-4 border-l border-border pl-4 space-y-0.5">
                     {item.children.map((child) => (
                       <Link
                         key={child.href}
                         href={child.href}
                         onClick={() => setMobileOpen(false)}
-                        className="block px-4 py-2 text-sm text-muted hover:text-white transition-colors"
+                        className="block px-4 py-2.5 text-sm text-muted hover:text-white active:bg-white/10 transition-colors rounded-md"
                       >
                         {child.label}
                       </Link>
@@ -146,16 +151,24 @@ export default function Navbar() {
                 )}
               </div>
             ))}
-            <div className="pt-4 border-t border-border">
+
+            <div className="pt-4 mt-2 border-t border-border space-y-3">
+              <a
+                href={`tel:${SITE.phone}`}
+                className="flex items-center justify-center gap-2 text-sm text-muted hover:text-white transition-colors py-2"
+              >
+                <Phone className="w-4 h-4" />
+                {SITE.phone}
+              </a>
               <Link
                 href="/contact"
                 onClick={() => setMobileOpen(false)}
-                className="block text-center bg-accent hover:bg-accent-hover text-white px-5 py-3 rounded-lg text-sm font-semibold transition-colors"
+                className="block text-center bg-accent hover:bg-accent-hover text-white px-5 py-3.5 rounded-lg text-sm font-semibold transition-colors"
               >
                 Get in Touch
               </Link>
             </div>
-          </div>
+          </nav>
         </div>
       )}
     </header>

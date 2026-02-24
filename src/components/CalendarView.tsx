@@ -217,24 +217,7 @@ export default function CalendarView() {
           </button>
         </div>
 
-        <div className="flex items-center gap-3">
-          {/* Filter */}
-          <div className="flex items-center gap-1 bg-white/[0.02] border border-border rounded-lg p-1">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
-                  filter === cat
-                    ? "bg-accent text-white"
-                    : "text-muted hover:text-white"
-                }`}
-              >
-                {cat === "all" ? "All" : cat}
-              </button>
-            ))}
-          </div>
-
+        <div className="flex items-center gap-2">
           {/* View toggle */}
           <div className="flex items-center gap-1 bg-white/[0.02] border border-border rounded-lg p-1">
             <button
@@ -261,9 +244,26 @@ export default function CalendarView() {
         </div>
       </div>
 
-      {/* Calendar Grid View */}
+      {/* Filter — full width row on mobile so it doesn't overflow */}
+      <div className="flex flex-wrap items-center gap-1.5 mb-6">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setFilter(cat)}
+            className={`px-3 py-1.5 text-xs font-medium rounded-full border transition-colors ${
+              filter === cat
+                ? "bg-accent text-white border-accent"
+                : "text-muted hover:text-white border-border hover:border-white/20"
+            }`}
+          >
+            {cat === "all" ? "All" : cat}
+          </button>
+        ))}
+      </div>
+
+      {/* Calendar Grid View — hidden on phones, use list view instead */}
       {view === "calendar" && (
-        <div className="bg-card border border-border rounded-2xl overflow-hidden mb-8">
+        <div className="hidden sm:block bg-card border border-border rounded-2xl overflow-hidden mb-8">
           {/* Day headers */}
           <div className="grid grid-cols-7 border-b border-border">
             {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
@@ -340,6 +340,22 @@ export default function CalendarView() {
               );
             })}
           </div>
+        </div>
+      )}
+
+      {/* Mobile fallback for grid view — show list on phones */}
+      {view === "calendar" && (
+        <div className="sm:hidden mb-4">
+          <p className="text-xs text-muted text-center mb-4">Grid view is optimized for tablets and larger screens. Showing list view on mobile.</p>
+          {monthEvents.length > 0 ? (
+            <div className="space-y-3">
+              {monthEvents.map((event) => (
+                <EventCard key={event.id} event={event} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-muted text-sm py-8">No events this month.</p>
+          )}
         </div>
       )}
 
