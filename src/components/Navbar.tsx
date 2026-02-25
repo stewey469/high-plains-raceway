@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { NAV_ITEMS, NavItem, SITE } from "@/lib/constants";
+import { NAV_ITEMS, NavItem, SITE, MOTORSPORTREG_URL } from "@/lib/constants";
 import { Menu, X, ChevronDown, Phone } from "lucide-react";
 
 function DropdownMenu({ item, onClose }: { item: NavItem; onClose: () => void }) {
@@ -105,12 +105,14 @@ export default function Navbar() {
               <Phone className="w-4 h-4" />
               {SITE.phone}
             </a>
-            <Link
-              href="/contact"
+            <a
+              href={MOTORSPORTREG_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-accent hover:bg-accent-hover text-white px-5 py-2 rounded-lg text-sm font-semibold transition-colors"
             >
-              Get in Touch
-            </Link>
+              Book Track Time
+            </a>
           </div>
 
           <button
@@ -160,13 +162,15 @@ export default function Navbar() {
                 <Phone className="w-4 h-4" />
                 {SITE.phone}
               </a>
-              <Link
-                href="/contact"
+              <a
+                href={MOTORSPORTREG_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setMobileOpen(false)}
                 className="block text-center bg-accent hover:bg-accent-hover text-white px-5 py-3.5 rounded-lg text-sm font-semibold transition-colors"
               >
-                Get in Touch
-              </Link>
+                Book Track Time
+              </a>
             </div>
           </nav>
         </div>
